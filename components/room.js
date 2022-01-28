@@ -137,6 +137,9 @@ function Room({ gameID, gameOwner, initialBet, gamePlayer }) {
             <AiOutlineCloseCircle
               className="text-2xl cursor-pointer"
               onClick={() => {
+                viewFunction("viewAllGames", {}).then((newGames) => {
+                  dispatch(setAllGames(newGames));
+                });
                 setShowPlayModal(false);
                 setIsLoading(false);
                 setGuess(null);
@@ -190,9 +193,6 @@ function Room({ gameID, gameOwner, initialBet, gamePlayer }) {
                     setResult(
                       `The dice number was ${res.winningGuess} , Winner is ${res.winner}`
                     );
-                    // viewFunction("viewAllGames", {}).then((newGames) => {
-                    //   dispatch(setAllGames(newGames));
-                    // });
                   });
                 });
                 setIsLoading(false);

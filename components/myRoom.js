@@ -13,7 +13,7 @@ import NearLogo from "../public/near.svg";
 import { AiOutlineCloseCircle } from "react-icons/ai";
 
 //Near imports
-import { wallet, callFunction } from "../near/near-setup";
+import { wallet, callFunction , viewFunction } from "../near/near-setup";
 
 //Redux import
 import { useDispatch } from "react-redux";
@@ -52,19 +52,18 @@ const MyRoom = ({ gameID, gameState, initialBet, gameOwner }) => {
 
     callFunction("deleteGame", { gameId: gameID })
       .then((res) => {
-        toast.success("Game has been deleted", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
+        viewFunction("viewAllGames", {}).then((newGames) => {
+          dispatch(setAllGames(newGames));
+          toast.success("Game has been deleted", {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+          });
         });
-
-        // viewFunction("viewAllGames", {}).then((newGames) => {
-        //   dispatch(setAllGames(newGames));
-        // });
       })
       .catch((err) => {
         console.log(err);
